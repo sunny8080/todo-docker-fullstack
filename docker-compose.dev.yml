@@ -1,0 +1,74 @@
+# This compose dockerfile will be used for development build purpose
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - todo-network
+
+  # Instead of Dockerfile.dev, We can also use same Dockerfile for development also with command change
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3000:3000
+    volumes:
+      - ./backend:/app # docker bind mount
+      - /app/node_modules # use docker image node modules
+    environment:
+      - PORT=3000
+      # mongodb uri will be different in case of docker containerized mongodb server
+      - MONGO_URI=mongodb://database:27017/todo_app
+      - NODE_ENV=development
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - todo-network
+
+  database:
+    image: mongo:9.0
+    restart: always
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test:
+        ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - todo-data:/data/db
+    networks:
+      - todo-network
+
+  # Optional GUI for mongodb
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://database:27017/todo_app
+      ME_CONFIG_BASICAUTH_ENABLED: "true"
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: nimda
+    depends_on:
+      - database
+    networks:
+      - todo-network
+
+volumes:
+  todo-data:
+
+networks:
+  todo-network:
+    driver: bridge
