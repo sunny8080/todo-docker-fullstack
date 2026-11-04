@@ -6,6 +6,7 @@ services:
       args:
         # Vite embeds this URL in the browser bundle at build time.
         VITE_BED_URL: ${VITE_BED_URL:-http://localhost:3000}
+    container_name: todo-frontend
     ports:
       - "5173:80"
     depends_on:
@@ -15,6 +16,7 @@ services:
   backend:
     build:
       context: ./backend
+    container_name: todo-backend
     ports:
       - "3000:3000"
     env_file:
