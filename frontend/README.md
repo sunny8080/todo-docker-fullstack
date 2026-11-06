@@ -6,7 +6,7 @@ React and TypeScript frontend built with Vite. The API base URL is read from `VI
 
 ```sh
 npm ci
-cp .env.example .env
+cp .env.sample .env
 npm run dev
 ```
 

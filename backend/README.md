@@ -8,11 +8,11 @@ Start MongoDB locally, then from this directory:
 
 ```sh
 npm ci
-cp .env.example .env
+cp .env.sample .env
 npm run dev
 ```
 
-The example `.env` uses MongoDB at `mongodb://127.0.0.1:27017/todo_app` and sets the API port to `5000`. The API health endpoint is <http://localhost:5000/api/health>. Configure the frontend's `VITE_BED_URL` to the same API origin and set `CLIENT_ORIGIN` to the frontend origin.
+The sample `.env` uses MongoDB at `mongodb://127.0.0.1:27017/todo_app` and sets the API port to `5000`. The API health endpoint is <http://localhost:5000/api/health>. Configure the frontend's `VITE_BED_URL` to the same API origin and set `CLIENT_ORIGIN` to the frontend origin.
 
 ## Run in development with Docker Compose
 
