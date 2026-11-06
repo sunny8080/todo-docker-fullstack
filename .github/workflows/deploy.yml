@@ -1,0 +1,28 @@
+name: Deploy Todo App to AWS
+
+# Run this yaml file when we have push on main branch
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+  deploy: 
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+    
+      - name: Deploy vis SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with: 
+          host: ${{ secrets.SSH_HOST }}
+          username: ubuntu
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            pwd
+            cd /home/ubuntu/todo-app
+            git pull
+            docker compose up -d --build
