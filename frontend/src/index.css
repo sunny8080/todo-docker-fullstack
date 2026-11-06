@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap');
+
+:root { font-family: 'DM Sans', sans-serif; color: #292a26; background: #f4f3ef; font-synthesis: none; text-rendering: optimizeLegibility; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; min-height: 100vh; }
+button, input { font: inherit; }
+.page-shell { min-height: 100vh; display: grid; place-items: center; padding: 64px 22px 36px; background: radial-gradient(ellipse at 50% 38%, #fbfaf7 0, #f4f3ef 62%); }
+.todo-panel { width: min(100%, 610px); background: #fffefa; border: 1px solid #e8e6de; padding: 58px 62px 28px; box-shadow: 0 22px 70px #4c493510; }
+.header { text-align: center; }
+.eyebrow, .list-heading, .footer, .page-note { font-family: 'DM Mono', monospace; letter-spacing: .1em; font-size: 10px; }
+.eyebrow { color: #8d907e; display: flex; gap: 9px; align-items: center; justify-content: center; }
+.sun-mark { color: #b58b54; font-size: 16px; }
+h1 { font-size: clamp(40px, 8vw, 56px); line-height: 1.1; letter-spacing: -.045em; margin: 24px 0 12px; font-weight: 500; }
+h1 em { font-family: 'Playfair Display', serif; font-weight: 500; color: #8d957c; }
+.intro { color: #929187; margin: 0; font-size: 14px; }
+.add-form { margin: 38px 0 34px; height: 54px; border: 1px solid #e8e7df; display: flex; padding: 5px; background: #fff; transition: border-color .18s; }
+.add-form:focus-within { border-color: #a5ab94; }
+.add-form input { flex: 1; min-width: 0; border: 0; outline: 0; padding: 0 13px; color: #363730; font-size: 14px; background: transparent; }
+.add-form input::placeholder { color: #b4b2aa; }
+.add-form button { width: 42px; border: 0; background: #89917a; color: white; font-size: 25px; line-height: 1; cursor: pointer; transition: background .18s; }
+.add-form button:hover { background: #707a61; }
+.list-heading { color: #929187; display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid #eeede7; }
+.count { color: #a6a593; margin-left: 4px; }
+.filters { display: flex; gap: 14px; }
+.filters button { padding: 0; border: 0; color: #a5a39a; background: none; cursor: pointer; text-transform: capitalize; font: inherit; letter-spacing: 0; }
+.filters button.selected { color: #5d6651; }
+.todo-list { list-style: none; padding: 0; margin: 0; }
+.todo-item { min-height: 58px; display: flex; align-items: center; gap: 13px; border-bottom: 1px solid #f0efe9; animation: arrive .22s ease-out; }
+.check { width: 19px; height: 19px; padding: 0; flex: 0 0 19px; border: 1px solid #c8c9bd; border-radius: 50%; background: transparent; color: white; font-size: 11px; cursor: pointer; }
+.done .check { border-color: #89917a; background: #89917a; }
+.todo-title { flex: 1; font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; }
+.done .todo-title { color: #aaa99f; text-decoration: line-through; text-decoration-color: #c4c2b9; }
+.delete { width: 28px; height: 28px; border: 0; background: transparent; color: #b5b3a9; font-size: 21px; cursor: pointer; opacity: 0; transition: opacity .15s, color .15s; }
+.todo-item:hover .delete, .delete:focus-visible { opacity: 1; }
+.delete:hover { color: #a26c5c; }
+.empty-state { min-height: 152px; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #969589; text-align: center; }
+.empty-state p { font-family: 'Playfair Display', serif; font-size: 19px; margin: 8px 0 4px; color: #717466; }
+.empty-state small { color: #aaa99e; font-size: 12px; }
+.empty-icon { color: #aab098; font-size: 25px; }
+.notice { color: #9d5d4d; font-size: 13px; margin: 14px 0 0; }
+.footer { display: flex; justify-content: space-between; gap: 12px; color: #aaa99e; border-top: 1px solid #eeede7; padding-top: 17px; font-size: 9px; letter-spacing: .06em; }
+.page-note { color: #aaa99e; text-align: center; margin-top: 21px; font-size: 9px; }
+.page-note span { padding: 0 7px; color: #b58b54; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+@keyframes arrive { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 520px) { .page-shell { padding: 24px 14px; } .todo-panel { padding: 40px 24px 22px; } .footer { font-size: 8px; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }

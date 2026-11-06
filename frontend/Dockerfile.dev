@@ -1,0 +1,14 @@
+# This dockerfile will be used for development build purpose
+# Docker for Development - Vite Hot reloading with Docker bind mounts 
+FROM node:26-alpine 
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+
+ENV NODE_ENV=development
+EXPOSE 5173
+
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
