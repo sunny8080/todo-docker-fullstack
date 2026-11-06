@@ -20,8 +20,5 @@ services:
     ports:
       - "3000:3000"
     env_file:
-      - ./backend/.env.prod
-    environment:
-      PORT: "3000"
-      CLIENT_ORIGIN: ${CLIENT_ORIGIN:-http://localhost:5173}
+      - ./backend/.env
     restart: unless-stopped

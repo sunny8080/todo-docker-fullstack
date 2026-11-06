@@ -28,8 +28,17 @@ To also delete the development database volume, run `docker compose -f docker-co
 
 The production Compose file builds the frontend and backend images. It expects a MongoDB connection string in `backend/.env.prod`; create that file from `backend/.env.example` and set `MONGO_URI` to your production database. Keep the file private and out of version control.
 
+Copy .env file and update env vars
+
 ```sh
-docker compose up --build -d
+cp .env.sample .env
+nano .env
+```
+
+Start docker containers-
+
+```sh
+docker compose up -d --build
 ```
 
 The app is available at <http://localhost:5173> and the API at <http://localhost:3000>. View service status and logs with `docker compose ps` and `docker compose logs -f`. Stop the production stack with `docker compose down`.
@@ -39,7 +48,7 @@ For a deployed site, set the browser-visible API URL and allowed frontend origin
 ```sh
 VITE_BED_URL=https://api.example.com \
 CLIENT_ORIGIN=https://app.example.com \
-docker compose up --build -d
+docker compose up -d --build
 ```
 
 `VITE_BED_URL` is embedded in the frontend bundle during the build, so changing it requires rebuilding the frontend. It is a public URL and must not contain credentials or secrets.
