@@ -1,6 +1,0 @@
-[submodule "frontend"]
-	path = frontend
-	url = git@github.com:sunny8080/todo-docker-frontend.git
-[submodule "backend"]
-	path = backend
-	url = git@github.com:sunny8080/todo-docker-backend.git
