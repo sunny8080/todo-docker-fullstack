@@ -22,7 +22,7 @@ app.use((error, _req, res, _next) => {
 });
 
 app.get('/', (req, res) => {
-  res.send('Hello from todo fullstack app backend!!');
+  res.send('Hello from todo fullstack app backend, season 2!!');
 });
 
 try {

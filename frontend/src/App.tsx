@@ -107,7 +107,7 @@ export default function App() {
             <br />
             for <em>what matters.</em>
           </h1>
-          <p className="intro">A little progress, one task at a time, every day.</p>
+          <p className="intro">A little progress, one task at a time.</p>
         </header>
 
         <form className="add-form" onSubmit={addTodo}>
