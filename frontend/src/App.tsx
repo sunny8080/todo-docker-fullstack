@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type SubmitEvent } from 'react';
+import TodoItem from './components/TodoItem';
 
-type Todo = {
+export type Todo = {
   _id: string;
   title: string;
   completed: boolean;
@@ -149,15 +150,7 @@ export default function App() {
         ) : (
           <ul className="todo-list">
             {visibleTodos.map((todo) => (
-              <li className={`todo-item ${todo.completed ? 'done' : ''}`} key={todo._id}>
-                <button className="check" type="button" aria-label={todo.completed ? 'Mark as active' : 'Mark as completed'} onClick={() => toggleTodo(todo)}>
-                  {todo.completed && '✓'}
-                </button>
-                <span className="todo-title">{todo.title}</span>
-                <button className="delete" type="button" aria-label={`Delete ${todo.title}`} onClick={() => deleteTodo(todo._id)}>
-                  ×
-                </button>
-              </li>
+              <TodoItem todo={todo} key={todo._id} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
             ))}
           </ul>
         )}

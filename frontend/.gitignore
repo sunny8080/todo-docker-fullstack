@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 .env
 .env.prod
+
+# Vitest reports and artifacts
+.vitest/
+coverage
