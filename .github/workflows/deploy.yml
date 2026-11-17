@@ -86,5 +86,54 @@ jobs:
           path: frontend/frontend-unit-test-report.json
           if-no-files-found: warn
 
-  # build:
-  # deploy:
+  frontend-build:
+    needs: frontend-unit-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
+
+      - name: Setup Frontend Node and caches
+        uses: actions/setup-node@v7
+        with:
+          node-version: 26
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install Dependencies
+        run: npm ci
+        working-directory: frontend
+
+      - name: Build website
+        id: build-website
+        run: npm run build
+        working-directory: frontend
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: frontend-dist
+          path: frontend/dist
+
+  frontend-deploy:
+    needs: frontend-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get build artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: frontend-dist
+      - name: Output contents
+        run: ls
+      - name: Dummy frontend deploy
+        run: echo "Deploying..." # currently dummy
+
+  frontend-report:
+    needs: [lint, deploy]
+    # if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output information
+        run: |
+          echo "Something went wrong"
+          echo "${{ toJSON(github) }}"
