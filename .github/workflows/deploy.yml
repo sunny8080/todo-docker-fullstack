@@ -142,4 +142,7 @@ jobs:
       - name: Output information
         run: |
           echo "Something went wrong"
-          echo "${{ toJSON(github) }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit ID: ${{ github.sha }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "Event name: ${{ github.event_name }}"
