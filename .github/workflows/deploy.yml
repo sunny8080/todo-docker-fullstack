@@ -129,7 +129,7 @@ jobs:
         run: echo "Deploying..." # currently dummy
 
   frontend-report:
-    needs: [lint, deploy]
+    needs: [frontend-lint, frontend-deploy]
     # if: failure()
     runs-on: ubuntu-latest
     steps:
