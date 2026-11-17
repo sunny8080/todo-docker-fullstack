@@ -123,6 +123,12 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: frontend-dist
+      - name: Get deployment details
+        run: |
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit ID: ${{ github.sha }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "Event name: ${{ github.event_name }}"
       - name: Output contents
         run: ls
       - name: Dummy frontend deploy
@@ -130,7 +136,7 @@ jobs:
 
   frontend-report:
     needs: [frontend-lint, frontend-deploy]
-    # if: failure()
+    if: failure()
     runs-on: ubuntu-latest
     steps:
       - name: Output information
