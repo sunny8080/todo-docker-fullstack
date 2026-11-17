@@ -10,5 +10,9 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/test/setup.ts',
+    reporters: ['default', 'json'],
+    outputFile: {
+      json: './frontend-unit-test-report.json',
+    },
   },
 });
