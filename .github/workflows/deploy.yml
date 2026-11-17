@@ -1,28 +1,58 @@
-name: Deploy Todo App to AWS
+name: Dummy Deploy
 
-# Run this yaml file when we have push on main branch
 on:
   push:
     branches:
       - main
-
+      - release-*
+  pull_request:
+    branches:
+      - main
+      - release-*
+  workflow_dispatch:
 
 jobs:
-  deploy: 
+  frontend-lint:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-    
-      - name: Deploy vis SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with: 
-          host: ${{ secrets.SSH_HOST }}
-          username: ubuntu
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            pwd
-            cd /home/ubuntu/todo-app
-            git pull
-            docker compose up -d --build
+      - name: Checkout Code
+        uses: actions/checkout@v7
+
+      # Setup node version
+      # - name: Setup Node
+      #   uses: actions/setup-node@v7
+      #   with:
+      #     node-version: 22
+
+      # Caches actual node_modules directory
+      # - name: Cache frontend node_modules
+      #   id: fronted-cache
+      #   uses: actions/cache@v6
+      #   with:
+      #     path: frontend/node_modules
+      #     key: frontend-${{ runner.os }}-node-modules-${{ hashFiles('frontend/package-lock.json') }}
+
+      # install frontend node_modules and skip this step if node_modules is cached
+      # - name: Install frontend Dependencies
+      #   if: steps.fronted-cache.outputs.cache-hit != 'true'
+      #   run: npm ci
+      #   working-directory: frontend
+
+      - name: Setup Frontend Node and caches
+        uses: actions/setup-node@v7
+        with:
+          node-version: 26
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install Dependencies
+        run: npm ci
+        working-directory: frontend
+
+      - name: Lint Code
+        run: npm run lint
+        working-directory: frontend
+
+  # test:
+  # build:
+  # deploy:
