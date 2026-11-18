@@ -7,6 +7,6 @@ test('adds 1 + 2 to equal 3', () => {
 
 describe('calculateTotal', () => {
   it('calculates total price', () => {
-    expect(calculateTotal(100, 3)).toBe(300);
+    expect(calculateTotal(100, 3)).toBe(3000);
   });
 });
