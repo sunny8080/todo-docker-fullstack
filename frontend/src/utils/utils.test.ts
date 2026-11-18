@@ -5,7 +5,7 @@ test('adds 1 + 2 to equal 3', () => {
   expect(sum(1, 2)).toBe(3);
 });
 
-describe('calculateTotal', () => {
+describe('calculateTotal2', () => {
   it('calculates total price', () => {
     expect(calculateTotal(100, 3)).toBe(300);
   });
