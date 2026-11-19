@@ -1,6 +1,25 @@
 name: GitHub Outputs
 on:
   workflow_dispatch:
+    inputs:
+      artifact_id:
+        description: Enter artifact ID
+        required: true
+        type: string
+
+      environment:
+        description: Deployment environment
+        required: true
+        type: choice
+        options:
+          - dev
+          - uat
+          - production
+
+      version:
+        description: Build version
+        required: false
+        type: string
 
 # share variable across the workflow, using env workflow-level
 env:
@@ -52,3 +71,13 @@ jobs:
           echo "script name : ${{needs.job-level-var.outputs.script_name}}"
           echo "current time : ${{needs.job-level-var.outputs.current_time}}"
           echo "current date : ${{needs.job-level-var.outputs.current_date}}"
+
+  # use input variable
+  use-input-var:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print input artifact id
+        run: |
+          echo "Artifact ID: ${{ inputs.artifact_id }}"
+          echo "Environment: ${{ inputs.environment }}"
+          echo "Version: ${{ inputs.version }}"
