@@ -1,6 +1,7 @@
 name: GitHub Outputs
 on:
   workflow_dispatch:
+    # define inputs, which need to take while triggering manually
     inputs:
       artifact_id:
         description: Enter artifact ID
@@ -23,7 +24,7 @@ on:
 
 # share variable across the workflow, using env workflow-level
 env:
-  workflow_level_var: github-outputs.yml
+  workflow_level_var: github-inputs-outputs.yml
 
 jobs:
   # share variable between steps in the same job # use $GITHUB_ENV
