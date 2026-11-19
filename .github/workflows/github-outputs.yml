@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Define Step level variable
         run: |
-          echo "step_level_var=define-var-step" >> $GITHUB_ENV
+          echo "step_level_var=define-step-var" >> $GITHUB_ENV
       - name: Use variable
         run: |
           echo "Step Level Var : $step_level_var"
@@ -49,6 +49,6 @@ jobs:
     steps:
       - name: Use job level variable
         run: |
-          echo "script name : ${{needs.build.job-level-var.script_name}}"
-          echo "current time : ${{needs.build.job-level-var.current_time}}"
-          echo "current date : ${{needs.build.job-level-var.current_date}}"
+          echo "script name : ${{needs.job-level-var.outputs.script_name}}"
+          echo "current time : ${{needs.job-level-var.outputs.current_time}}"
+          echo "current date : ${{needs.job-level-var.outputs.current_date}}"
