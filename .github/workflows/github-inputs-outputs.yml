@@ -1,4 +1,4 @@
-name: GitHub Outputs
+name: GitHub Input Outputs
 on:
   workflow_dispatch:
     # define inputs, which need to take while triggering manually
