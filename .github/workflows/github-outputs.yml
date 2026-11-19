@@ -1,0 +1,54 @@
+name: GitHub Outputs
+on:
+  workflow_dispatch:
+
+# share variable across the workflow, using env workflow-level
+env:
+  workflow_level_var: github-outputs.yml
+
+jobs:
+  # share variable between steps in the same job # use $GITHUB_ENV
+  step-level-var:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Define Step level variable
+        run: |
+          echo "step_level_var=define-var-step" >> $GITHUB_ENV
+      - name: Use variable
+        run: |
+          echo "Step Level Var : $step_level_var"
+      - name: Use workflow level variable
+        run: |
+          echo "Workflow level var: $workflow_level_var"
+
+  # share variable between different jobs, using GITHUB_OUTPUT
+  job-level-var:
+    runs-on: ubuntu-latest
+    outputs:
+      script_name: ${{ steps.set-vars.outputs.script_name }}
+      current_time: ${{ steps.set-vars.outputs.current_time }}
+      current_date: ${{ steps.set-vars.outputs.current_date }}
+    steps:
+      - name: Define job level variable
+        id: set-vars
+        run: |
+          echo "script_name=deploy.sh" >> $GITHUB_OUTPUT
+          echo "current_time=$(date '+%H:%M:%S')" >> $GITHUB_OUTPUT
+          echo "current_date=$(date '+%d-%m-%Y')" >> $GITHUB_OUTPUT
+      - name: Print script name
+        run: |
+          echo "script name=${{ steps.set-vars.outputs.script_name}}"
+          echo "current time=${{ steps.set-vars.outputs.current_time }}"
+          echo "current date=${{ steps.set-vars.outputs.current_date }}"
+          echo "Timestamp: $(date -u +%s%3N)"
+
+  # use job level variable using needs
+  use-job-level-var:
+    runs-on: ubuntu-latest
+    needs: job-level-var
+    steps:
+      - name: Use job level variable
+        run: |
+          echo "script name : ${{needs.build.job-level-var.script_name}}"
+          echo "current time : ${{needs.build.job-level-var.current_time}}"
+          echo "current date : ${{needs.build.job-level-var.current_date}}"
