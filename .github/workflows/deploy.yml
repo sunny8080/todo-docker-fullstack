@@ -11,137 +11,137 @@ on:
   workflow_dispatch:
 
 jobs:
-  # frontend-lint:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v7
+  frontend-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
 
-  #     # Setup node version
-  #     # - name: Setup Node
-  #     #   uses: actions/setup-node@v7
-  #     #   with:
-  #     #     node-version: 22
+      # Setup node version
+      # - name: Setup Node
+      #   uses: actions/setup-node@v7
+      #   with:
+      #     node-version: 22
 
-  #     # Caches actual node_modules directory
-  #     # - name: Cache frontend node_modules
-  #     #   id: fronted-cache
-  #     #   uses: actions/cache@v6
-  #     #   with:
-  #     #     path: frontend/node_modules
-  #     #     key: frontend-${{ runner.os }}-node-modules-${{ hashFiles('frontend/package-lock.json') }}
+      # Caches actual node_modules directory
+      # - name: Cache frontend node_modules
+      #   id: fronted-cache
+      #   uses: actions/cache@v6
+      #   with:
+      #     path: frontend/node_modules
+      #     key: frontend-${{ runner.os }}-node-modules-${{ hashFiles('frontend/package-lock.json') }}
 
-  #     # install frontend node_modules and skip this step if node_modules is cached
-  #     # - name: Install frontend Dependencies
-  #     #   if: steps.fronted-cache.outputs.cache-hit != 'true'
-  #     #   run: npm ci
-  #     #   working-directory: frontend
+      # install frontend node_modules and skip this step if node_modules is cached
+      # - name: Install frontend Dependencies
+      #   if: steps.fronted-cache.outputs.cache-hit != 'true'
+      #   run: npm ci
+      #   working-directory: frontend
 
-  #     - name: Setup Frontend Node and caches
-  #       uses: actions/setup-node@v7
-  #       with:
-  #         node-version: 26
-  #         cache: npm
-  #         cache-dependency-path: frontend/package-lock.json
+      - name: Setup Frontend Node and caches
+        uses: actions/setup-node@v7
+        with:
+          node-version: 26
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
 
-  #     - name: Install Dependencies
-  #       run: npm ci
-  #       working-directory: frontend
+      - name: Install Dependencies
+        run: npm ci
+        working-directory: frontend
 
-  #     - name: Lint Code
-  #       run: npm run lint
-  #       working-directory: frontend
+      - name: Lint Code
+        run: npm run lint
+        working-directory: frontend
 
-  # frontend-unit-test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v7
+  frontend-unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
 
-  #     - name: Setup Frontend Node and caches
-  #       uses: actions/setup-node@v7
-  #       with:
-  #         node-version: 26
-  #         cache: npm
-  #         cache-dependency-path: frontend/package-lock.json
+      - name: Setup Frontend Node and caches
+        uses: actions/setup-node@v7
+        with:
+          node-version: 26
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
 
-  #     - name: Install Dependencies
-  #       run: npm ci
-  #       working-directory: frontend
+      - name: Install Dependencies
+        run: npm ci
+        working-directory: frontend
 
-  #     - name: Unit test Code
-  #       id: run-tests
-  #       run: npm run test
-  #       working-directory: frontend
+      - name: Unit test Code
+        id: run-tests
+        run: npm run test
+        working-directory: frontend
 
-  #     - name: Upload unit test report
-  #       if: always()
-  #       uses: actions/upload-artifact@v7
-  #       with:
-  #         name: frontend-unit-test-report
-  #         path: frontend/frontend-unit-test-report.json
-  #         if-no-files-found: warn
+      - name: Upload unit test report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: frontend-unit-test-report
+          path: frontend/frontend-unit-test-report.json
+          if-no-files-found: warn
 
-  # frontend-build:
-  #   needs: frontend-unit-test
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v7
+  frontend-build:
+    needs: frontend-unit-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
 
-  #     - name: Setup Frontend Node and caches
-  #       uses: actions/setup-node@v7
-  #       with:
-  #         node-version: 26
-  #         cache: npm
-  #         cache-dependency-path: frontend/package-lock.json
+      - name: Setup Frontend Node and caches
+        uses: actions/setup-node@v7
+        with:
+          node-version: 26
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
 
-  #     - name: Install Dependencies
-  #       run: npm ci
-  #       working-directory: frontend
+      - name: Install Dependencies
+        run: npm ci
+        working-directory: frontend
 
-  #     - name: Build website
-  #       id: build-website
-  #       run: npm run build
-  #       working-directory: frontend
+      - name: Build website
+        id: build-website
+        run: npm run build
+        working-directory: frontend
 
-  #     - name: Upload Artifacts
-  #       uses: actions/upload-artifact@v7
-  #       with:
-  #         name: frontend-dist
-  #         path: frontend/dist
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: frontend-dist
+          path: frontend/dist
 
-  # frontend-deploy:
-  #   needs: frontend-build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Get build artifacts
-  #       uses: actions/download-artifact@v8
-  #       with:
-  #         name: frontend-dist
-  #     - name: Get deployment details
-  #       run: |
-  #         echo "Branch: ${{ github.ref_name }}"
-  #         echo "Commit ID: ${{ github.sha }}"
-  #         echo "Actor: ${{ github.actor }}"
-  #         echo "Event name: ${{ github.event_name }}"
-  #     - name: Output contents
-  #       run: ls
-  #     - name: Dummy frontend deploy
-  #       run: echo "Deploying..." # currently dummy
+  frontend-deploy:
+    needs: frontend-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get build artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: frontend-dist
+      - name: Get deployment details
+        run: |
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit ID: ${{ github.sha }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "Event name: ${{ github.event_name }}"
+      - name: Output contents
+        run: ls
+      - name: Dummy frontend deploy
+        run: echo "Deploying..." # currently dummy
 
-  # frontend-report:
-  #   needs: [frontend-lint, frontend-deploy]
-  #   if: failure()
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Output information
-  #       run: |
-  #         echo "Something went wrong"
-  #         echo "Branch: ${{ github.ref_name }}"
-  #         echo "Commit ID: ${{ github.sha }}"
-  #         echo "Actor: ${{ github.actor }}"
-  #         echo "Event name: ${{ github.event_name }}"
+  frontend-report:
+    needs: [frontend-lint, frontend-deploy]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output information
+        run: |
+          echo "Something went wrong"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit ID: ${{ github.sha }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "Event name: ${{ github.event_name }}"
 
   backend-api-test:
     runs-on: ubuntu-latest

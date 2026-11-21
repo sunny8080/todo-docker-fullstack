@@ -2,22 +2,22 @@ name: Deploy Todo App on AWS
 
 # Run this yaml file when we have push on main branch
 on:
-  push:
-    branches:
-      - main
-
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
 
 jobs:
-  deploy: 
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-    
+
       - name: Deploy vis SSH
         uses: appleboy/ssh-action@v1.0.3
-        with: 
+        with:
           host: ${{ secrets.SSH_HOST }}
           username: ubuntu
           key: ${{ secrets.SSH_KEY }}
