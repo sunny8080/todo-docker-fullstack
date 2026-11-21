@@ -61,7 +61,7 @@ test.describe('GET /api/todos', () => {
   test('returns a list of todos', async ({ request }) => {
     const response = await request.get('/api/todos');
 
-    expect(response.status()).toBe(200);
+    expect(response.status()).toBe(201);
     const todos = await response.json();
     expect(Array.isArray(todos)).toBe(true);
   });
